@@ -1,0 +1,53 @@
+﻿@model eCommerce.Dto.Brand.BrandSearchViewModel
+@using PagedList
+@using PagedList.Mvc
+<div class="panel panel-default">
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th class="text-center">Display order</th>
+                        <th class="text-center"><em class="fa fa-cog"></em></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.BrandList)
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+
+                            <td>@item.BrandName</td>
+
+                            <td class="text-center">@item.OrderNo</td>
+
+                            <td class="text-center">
+                                <a class="btn btn-default" href="/Management/Brand/Edit/@item.Id"><em class="fa fa-pencil"></em></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="panel-footer">
+      
+
+            @Html.PagedListPager(Model.BrandList, page => Url.Action("List", new RouteValueDictionary {
+
+    {"Page",page },
+    {"BrandName",Model.BrandName }
+
+}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "divBrandId", OnBegin = "OnBegin", OnComplete = "OnComplete" }))
+    
+    </div>
+</div>

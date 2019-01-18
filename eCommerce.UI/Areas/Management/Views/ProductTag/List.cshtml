@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<eCommerce.Dto.ProductTag.ProductTagListViewModel>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<div id="divtaglist">
+    @Html.Partial("_TagList", Model)
+</div>
+
+
+@Html.Action("_TagEditPopup","ProductTag")
+
+
+@section scripts{
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function TagEditPopup(Id) {
+            if (Id > 0) {
+
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "/Management/ProductTag/Edit",
+                    data: { 'Id': Id },
+                    dataType: "Json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        
+                        $("#Id").val(data.Id);
+                        $("#Name").val(data.Name);
+                      
+                        $("#tagEditPopup").modal("show");
+
+                    },
+                    error: function () {
+                        alert("tag edit eror");
+                    }
+
+                })
+                
+            }
+        }
+        function TagDeletePopup(Id) {
+
+         
+            console.log("tag" + Id);
+            if (Id > 0) {
+                var result = confirm("Silmek istediğinizden eminmisiniz");
+                if (result) {
+
+                    $.ajax({
+                        type: "Post",
+                        url: "/Management/ProductTag/Delete",
+                        data: { 'Id': Id },
+                        success: function (data) {
+
+                            GetList();
+
+                        },
+                        error: function () {
+                            alert("Silme işleminde bir hata gerçekleşti");
+                        }
+
+
+                    })
+
+                }
+            }
+
+        }
+        function OnSuccess(result) {
+            if(result=="1")
+            {
+                $("#Id").val(0);
+                $("#Name").val();
+                $("#tagEditPopup").modal("hide");
+                GetList();
+            }
+        }
+        function GetList() {
+           
+                $.ajax({
+
+                    type: "GET",
+                    url: "/Management/ProductTag/List",            
+                    dataType: "html",
+                    success: function (data) {
+                   
+                        $("#divtaglist").html(data);
+
+                    }
+
+                })
+
+            }
+       
+    </script>
+
+}

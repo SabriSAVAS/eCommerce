@@ -1,0 +1,61 @@
+﻿@model IPagedList<eCommerce.Dto.Product.ProductListViewModel>
+@using PagedList;
+@using PagedList.Mvc;
+<div id="categoryListId">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-responsive table-condensed">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+
+                        <th class="text-center">
+                            Puhlished
+                        </th>
+
+                        <th class="text-center">
+                            Display order
+                        </th>
+
+                        <th class="text-center">
+                            Edit
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td class="text-center">@item.Puhlished</td>
+                                <td class="text-center">@item.Id</td>
+                                <td class="text-center">
+                                    <a href="/Management/Product/Edit/@item.Id" class="btn btn-block btn-default btn-xs">Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+    <div class="box-footer clearfix">
+        @Html.PagedListPager(Model, page => Url.Action("_CategoryProductList", new RouteValueDictionary {
+
+    {"Page",page },
+
+
+}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "categoryListId",OnBegin= "OnBegin", OnComplete= "OnComplete" }))
+
+
+    </div>
+</div>

@@ -1,0 +1,243 @@
+﻿
+<div class="panel-group">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            Add a new picture
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div>
+
+                    <div class="col-md-3">
+                        <div class="pull-right">Picture</div>
+                    </div>
+                    <div class="col-md-9">
+                        <div>
+                            <div class="img-responsive" style="width:200px;height:100px" id="dvPreview">
+
+                                <img class="img-responsive" style="width:200px;height:100px" src="~/Areas/Management/Content/img/noPicture.png" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="fileUpload btn btn-primary">
+                                <input type="hidden" id="productpictureId" value="0" />
+                                <span>Upload a file</span>
+                                <input id="fileAsyncupload" accept="image/gif, image/jpeg, image/png" class="upload" name="Picture" onchange="fileAsyncUpload()" type="file" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+
+                    <div class="col-md-3">
+                        <div class="pull-right">Alt:</div>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="pictureAlt" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+
+                    <div class="col-md-3">
+                        <div class="pull-right">Title:</div>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="pictureTitle" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+
+                    <div class="col-md-3">
+                        <div class="pull-right">Display order:</div>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" id="pictureDisplayorder" value="0" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <a href="javascript:AddPictureUpload()" class="btn btn-success">Add product picture</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+        function AddPictureUpload() {
+            var productId = $("#productId").val();
+
+            console.log("product>>" + productId);
+            if (productId == 0) {
+                alert("Product Null");
+                return;
+            }
+            var pictureId = $("#productpictureId").val();
+
+            console.log("productpictureId=>>" + pictureId);
+            if (pictureId == 0) {
+                alert("Picture no upload");
+                return;
+            }
+            var pictureAlt = $("#pictureAlt").val();
+            var pictureTitle = $("#pictureTitle").val();
+            var pictureDisplayorder = $("#pictureDisplayorder").val();
+
+            var PosData = {
+                productId: productId,
+                pictureDisplayorder: pictureDisplayorder,
+                pictureTitle: pictureTitle,
+                pictureAlt: pictureAlt,
+                pictureId: pictureId
+            }
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '/Management/Product/ProductPictureAdd',
+                data: PosData,
+                success: function (data) {
+                    if (data == "1") {
+                        ProductPictureList();
+                        $("#wait").css("display", "none");
+                        $("#productpictureId").val(0);
+                    }
+                },
+                beforeSend: function () {
+                    $("#wait").css("display", "block");
+                },
+                complate: function () {
+
+                    $("#wait").css("display", "none");
+                },
+                error: function () {
+                    alert("hata addproductPicture");
+                }
+
+            });
+
+        }
+</script>
+
+<script>
+        function fileAsyncUpload() {
+
+
+            var formData = new FormData();
+            var totalFiles = document.getElementById("fileAsyncupload").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("fileAsyncupload").files[i];
+
+                formData.append("fileAsyncupload", file);
+            }
+
+
+            $.ajax({
+                type: "Post",
+                url: '/Management/Picture/AsyncUpload',
+                data: formData,
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+                    $("#productpictureId").val(data.Id);
+
+                    $("#dvPreview").html("<img class='img-responsive' style='width:200px;height:100px'  src='" + data.SmallPath + "'/>");
+                    $("#wait").css("display", "none");
+
+                },
+                beforeSend: function () {
+                    $("#wait").css("display", "block");
+                },
+                complate: function () {
+
+                    $("#wait").css("display", "none");
+                },
+                error: function () {
+                    alert("hata asyncload");
+                }
+            })
+
+        }
+</script>
+
+<script>
+        function ProductPictureList() {
+            var productId = $("#productId").val();
+            $.ajax({
+                type: "Get",
+                url: '/Management/Product/ProductPictureList/'+productId,
+                dataType: "html",
+                success: function (data) {
+
+                    $("#productList").html(data);
+
+                },
+                beforeSend: function () {
+                    $("#wait").css("display", "block");
+                },
+                complate: function () {
+
+                    $("#wait").css("display", "none");
+                },
+                error: function () {
+                    alert("hata list");
+                }
+            })
+
+        }
+</script>
+
+<script>
+        function ProductPictureDelete(Id)
+        {
+
+            console.log("Product PictureId" + Id);
+            if (Id > 0) {
+                var result = confirm("Silmek istediğinizden eminmisiniz");
+                if (result) {
+
+                    $.ajax({
+                        type: "Post",
+                        url: "/Management/Product/PictureDelete",
+                        data: { 'Id': Id },
+                        success: function (data) {
+
+                            if (data=="1") {
+                                $("#tr_" + Id).remove();
+                                $("#wait").css("display", "none");
+                            }
+                            else {
+                                $("#wait").css("display", "none");
+                                alert("Silme işlemi sirasinda hata gerçekleşti");
+                            }
+                        },
+                        beforeSend: function () {
+                            $("#wait").css("display", "block");
+                        },
+                        complate: function () {
+                            $("#wait").css("display", "none");
+                        },
+                        error: function () {
+                            alert("Silme işleminde bir hata gerçekleşti");
+                        }
+
+
+                    })
+
+                }
+            }
+
+        }
+
+</script>

@@ -1,0 +1,48 @@
+﻿@model eCommerce.Dto.PredefinedProductAttributeValue.PredefinedProductAttributeValueViewModel
+
+<div class="modal fade" id="productAttributeCreatevaluePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Create Attribute Value</h4>
+
+            </div>
+
+            @using (Ajax.BeginForm("_ValueCreatePopup", "ProductAttribute", FormMethod.Post, new AjaxOptions { OnSuccess = "CreateValueOnSuccess" }, new { Id = "form-Createproductattribute_Value" }))
+            {
+                @Html.ValidationSummary()
+                @Html.Partial("_ValueCreatePopup",Model)
+
+            }
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<div class="modal fade" id="productAttributeEditvaluePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Attribute Value</h4>
+
+            </div>
+
+            @using (Ajax.BeginForm("_ValueEditPopup", "ProductAttribute", FormMethod.Post, new AjaxOptions { OnSuccess = "EditValueOnSuccess" }, new { Id = "form-Editproductattribute_Value" }))
+            {
+                @Html.ValidationSummary()
+                @Html.Partial("_ValueEditPopup",Model)
+
+            }
+        </div>
+
+
+    </div>
+
+
+</div>

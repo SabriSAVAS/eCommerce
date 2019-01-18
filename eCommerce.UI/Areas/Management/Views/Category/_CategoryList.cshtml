@@ -1,0 +1,83 @@
+﻿@model eCommerce.Dto.Category.CategorySearchViewModel
+@using PagedList;
+@using PagedList.Mvc;
+
+@helper GetStatus(bool statu)
+{
+
+if (statu == true)
+{
+        <span class="label label-success">True</span>
+}
+else
+{
+        <span class="label label-danger">False</span>
+}
+}
+
+
+
+<div class="table-responsive">
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+
+                <th class="text-center">
+                    Puhlished
+                </th>
+
+                <th class="text-center">
+                    Display order
+                </th>
+
+                <th class="text-center">
+                    <em class="fa fa-cog"></em>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.CategoryList.Count > 0)
+            {
+
+                foreach (var item in Model.CategoryList)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td class="text-center">@GetStatus(item.Published)</td>
+                        <td class="text-center">@item.OrderNo</td>
+                        <td class="text-center">
+                            <a href="/Management/Category/Edit/@item.Id" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                            <a href="javascript:CategoryDelete(@item.Id)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                            @*  <a href="/Management/Category/Edit/@item.Id" class="btn btn-default btn-xs">Edit</a>*@
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+
+
+    <div class="panel-footer">
+
+
+        @Html.PagedListPager(Model.CategoryList, page => Url.Action("List", new RouteValueDictionary {
+
+    {"Page",page },
+    {"CategoryName",Model.CategoryName }
+
+}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "categoryListId", OnBegin = "OnBegin", OnComplete = "OnComplete" }))
+
+
+    </div>
+
+
+
+</div>
+
+
+

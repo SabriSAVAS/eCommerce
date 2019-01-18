@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post))
+{
+    <div class="content-header">
+
+        <h1 class="pull-left">
+            Add a new Product
+        </h1>
+        <a href="/Management/Product/List"><i class="fa fa-undo">Back to produt list</i></a>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floopy-o"></i>Save
+            </button>
+            <button type="submit" name="savecontiune" class="btn bg-blue">
+                <i class="fa fa-floopy-o"></i>Save and Continue Edit
+            </button>
+        </div>
+
+
+    </div>
+
+    @Html.Partial("_CreateEditProduct")
+
+}

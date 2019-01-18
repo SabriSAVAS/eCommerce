@@ -1,0 +1,130 @@
+﻿@model List<eCommerce.Dto.ProductAttributeMapping.ProductAttributeMappingListViewModel>
+    @using eCommerce.Dto.Enums
+<div class="panel-group">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <b>Product Attributes</b>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Attribute
+                            </th>
+
+                            <th>
+                                Text prompt
+                            </th>
+
+                            <th>
+                                Contol Type
+                            </th>
+                            <th>
+                                View
+                            </th>
+                            <th>
+                                Edit
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                    {
+                            <tr id="tr_@item.Id">
+                                <td>@item.ProductAttribute</td>
+                                <td>@item.TextPrompt</td>
+                                <td>@Enum.GetName(typeof( AttributeControlType), item.AttributeControlTypeId)</td>
+                                <td>
+                                    <a href="javascript:productAttributeView(@item.Id)">View</a>
+
+                                </td>
+                                <td>
+                                    <a href="javascript:productAttributeDelete(@item.Id)" class="btn btn-danger">
+                                        <em class="fa fa-trash"></em>
+                                    </a>
+                                </td>
+
+                            </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function productAttributeDelete(Id) {
+        console.log(Id);
+        if (Id>0) {
+            var result = confirm("Silmek istediğinizden emin misiniz?");
+            if (result) {
+                $.ajax({
+                    type: "Post",
+                    url: "/Management/Product/ProductAttributeDelete/" + Id,
+                    dataType: "Json",
+                    success: function (data) {
+
+                        if (data == "1") {
+                            $("#tr_" + Id).remove();
+                        }
+
+
+                    }
+
+                });
+            }
+        
+
+        }
+
+    }
+</script>
+<script>
+    function productAttributeView(Id) {
+        console.log(Id);
+        if (Id > 0) {
+          
+                $.ajax({
+                    type: "GET",
+                    url: "/Management/Product/ProductAttributeValue/" + Id,
+                    dataType: "html",
+                    success: function (data) {
+                       
+                        $("#productattributeView").modal('show');
+                        $("#productattributevalue").html(data);
+                        
+                    }
+
+                });
+            }
+
+
+        }
+
+    
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="productattributeView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                
+            </div>
+            <div class="modal-body">
+                <div id="productattributevalue">
+                    @Html.Action("ProductAttributeValue", "Product")
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

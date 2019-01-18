@@ -1,0 +1,132 @@
+﻿@model eCommerce.Dto.Product.ProductSearchViewModel
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Manage Products
+    </h1>
+    <div class="pull-right">
+        <a href="/Management/Product/Create" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Add new
+        </a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                Export
+            </button>
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">&nbsp;</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a href="/Management/Product/ExportXml">
+                        <i class="fa fa-file-code-o"></i>
+                        Export to XML
+                    </a>
+                </li>
+                <li>
+                    <a href="/Management/Product/ExportXlsx">
+                        <i class="fa fa-file-excel-o"></i>
+                        Export to Excel
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <button type="button" name="importexcel" class="btn bg-olive" data-toggle="modal" data-target="#importexcel-window">
+            <i class="fa fa-upload"></i>
+            Import
+        </button>
+    </div>
+</div>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    @using (Ajax.BeginForm("List", "Product", FormMethod.Post, new AjaxOptions { OnSuccess = "OnSuccess" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <div class="label-wrapper">
+                                            <label class="control-label">Product name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(x => x.ProductName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <div class="label-wrapper">
+                                            <label class="control-label">Category</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(x => x.CategoryId, Model.CategoryList, "Seçiniz", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <div class="label-wrapper">
+                                            <label class="control-label">Brand</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(x => x.BrandId, Model.BrandList, "Seçiniz", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <div class="label-wrapper">
+                                            <label class="control-label">Published</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CheckBoxFor(x => x.Puhlished)
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="submit" id="search-product" class="btn btn-primary btn-search"><i class="fa fa-search"></i>Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div id="ajax-productlist">
+                   
+
+                            @Html.Partial("_ProductList", Model)
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function OnSuccess(result) {
+        $("#ajax-productlist").html(result);
+    }
+</script>

@@ -1,0 +1,217 @@
+﻿@model eCommerce.Dto.SpecificationProductMapping.ProductSpecificationMappingViewModel
+<div>
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    Add a new specification
+                </div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <div class="pull-right">
+                                <label class="control-label">Attribute Type :</label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div>
+                                @Html.EnumDropDownListFor(x => x.SpecificationAttributeType, new { onchange = "AttributeSelect()", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <div class="pull-right">
+                                <label class="control-label">Attribute :</label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div>
+
+                                @Html.DropDownListFor(x => x.SpecificationAttributeId, Model.SpecificationAttribute,"Selected", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:block" id="option">
+                        <div class="col-md-3">
+                            <div class="pull-right">
+                                <label class="control-label">Attribute option :</label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div>
+                                @Html.DropDownListFor(x => x.SpecificationAttributeValueId, Model.SpecificationAttributeValue, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:none" id="custumtext">
+                        <div class="col-md-3">
+                            <div class="pull-right">
+                                <label class="control-label">Custom Text :</label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div>
+                                @Html.TextBoxFor(x => x.CustomValue, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <div class="pull-right">
+                                <label class="control-label">Show on product page :</label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div>
+                                @Html.CheckBoxFor(x => x.ShowOnProductPage)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-9 col-md-offset-3">
+                            <div>
+                                <input type="button" onclick="ProductSpecificationValueAdd()" class="btn btn-primary" value="Add attribute" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function AttributeSelect() {
+            var data = $("#SpecificationAttributeType").val();
+
+            if (data == "10") {
+                $("#custumtext").css("display", "block");
+                $("#option").css("display", "none");
+
+            }
+            if (data == "0") {
+                $("#custumtext").css("display", "none");
+                $("#option").css("display", "block");
+            }
+
+
+        }
+
+    </script>
+
+    <script>
+        function ProductSpecificationValueAdd() {
+
+
+            var productId = $("#productId").val();
+            var AttributeTypeId = $("#SpecificationAttributeType").val();
+            var SpecificationAttributeValueId = $("#SpecificationAttributeValueId").val();
+            var CustomValue = $("#CustomValue").val();
+            var ShowOnProductPage = $("#ShowOnProductPage").val();
+            if (productId == 0) {
+                alert("Product Id >> Null");
+            }
+            if (SpecificationAttributeValueId == 0 || SpecificationAttributeValueId == null) {
+
+                alert("Specification Attribute Value >> Null");
+            }
+
+            var formData = {
+                productId: productId,
+                AttributeTypeId: AttributeTypeId,
+                SpecificationAttributeValueId: SpecificationAttributeValueId,
+                CustomValue: CustomValue,
+                ShowOnProductPage: ShowOnProductPage
+
+            }
+
+            $.ajax({
+                type: "Post",
+                url: "/Management/Product/ProductSpecificationValueAdd",
+                data: formData,
+                cache: false,
+                success: function (data) {
+                    if (data == "1") {
+                        GetProductSpecification(productId);
+                    }
+                    else {
+                        alert("Başarısız");
+                    }
+                }
+
+            });
+        }
+    </script>
+    <script>
+        function productSpecificationAttributeDelete(Id) {
+
+
+            console.log("Id" + Id);
+            if (Id > 0) {
+                var result = confirm("Silmek istediğinizden eminmisiniz");
+                if (result) {
+
+                    $.ajax({
+                        type: "Post",
+                        url: "/Management/Product/ProductSpecificationValueDelete",
+                        data: { 'Id': Id },
+                        success: function (data) {
+
+                            if (data == "1") {
+                                $("#tr_" + Id).remove();
+                                 $("#wait").css("display", "none");
+                            }
+
+                        },
+                        beforeSend: function () {
+                            $("#wait").css("display", "block");
+                        },
+                        complate: function () {
+                            $("#wait").css("display", "none");
+                        },
+                        error: function () {
+                            alert("Silme işleminde bir hata gerçekleşti");
+                        }
+
+
+                    })
+
+                }
+            }
+
+        }
+    </script>
+    <script>
+        function GetProductSpecification(Id) {
+          
+            if (Id > 0) {
+                $.ajax({
+                    type: "Post",
+                    url: "/Management/Product/ProductSpecificationAttributeList",
+                    data: { 'Id': Id },
+                    success: function (data) {
+
+                       
+                        $("#productAttributeList").html(data);
+                      
+
+                    },
+                    beforeSend: function () {
+                        $("#wait").css("display", "block");
+                    },
+                    complate: function () {
+                        $("#wait").css("display", "none");
+                    },
+                    error: function () {
+                        alert("Silme işleminde bir hata gerçekleşti");
+                    }
+
+
+                })
+                $("#wait").css("display", "none");
+            }
+        }
+    </script>
+
+</div>

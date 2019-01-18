@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post))
+{
+    <div class="content-header">
+
+        <h1 class="pull-left">
+            Add a new Product
+        </h1>
+        <a href="/Management/Product/List"><i class="fa fa-undo">Back to produt list</i></a>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floopy-o"></i>Save
+            </button>
+            <button type="submit" name="savecontiune" class="btn bg-blue">
+                <i class="fa fa-floopy-o"></i>Save and Continue Edit
+            </button>
+            <button type="submit" name="delete" class="btn btn-danger">
+                <i class="fa fa-floopy-o"></i>Delete
+            </button>
+        </div>
+
+
+    </div>
+
+    @Html.Partial("_CreateEditProduct")
+
+}
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            
+            $("#SpecificationAttributeValueId").prop('disabled', true);
+                $("#SpecificationAttributeId").change(function () {
+
+                    var option = $("#SpecificationAttributeValueId");
+                    var Id = $(this).val();
+                   
+                    var spec = $('#SpecificationAttributeValueId');
+                    spec.empty();
+                    if (Id > 0) {
+                        $.ajax({
+                            url: '/Management/Product/ProductSpecificationValue',
+                            type: 'POST',
+                            data: { 'id': Id },
+                            cache: 'false',
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.length>0) {
+                                    $("#SpecificationAttributeValueId").prop('disabled', false);
+                                    $.each(data, function (i, item) {
+
+                                        spec.append('<option value=' + item.Value + '>' + item.Text + '</option>');
+                                    });
+                                }
+                              
+                                $("#wait").css("display", "none");
+                            },
+                            beforeSend: function () {
+                                $("#wiat").css("display", "block");
+                            },
+                            complate: function () {
+                                $("#wait").css("display", "none");
+                            },
+                            error: function () {
+                                alert("Add category Fail");
+                            }
+
+
+
+                        });
+                    }
+                    //else {
+                    //    spec.append('<option value=' + 0 + '> Selected </option>');
+                    //}
+                });
+            });
+    </script>
+}
+
+<!--
+    Benzer urunler icin Popup penceresi
+-->
+
+<div class="modal fade" id="productreleated" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Products</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Action("RelatedProductPopup", "Product")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

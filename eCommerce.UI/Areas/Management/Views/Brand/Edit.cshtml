@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm("Edit", "Brand", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <div class="content-header">
+        <h1 class="pull-left">
+            Add a new Brand
+        </h1> &nbsp;
+        <a href="/Management/Brand/List"><i class="fa fa-undo">Back to brand list</i></a>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save
+            </button>
+            <button type="submit" name="savecontiune" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save and Continue Edit
+            </button>
+            <a onclick="javascript: BrandDelete()" name="save" class="btn btn-danger">
+                <i class="fa fa-remove"></i> Delete
+            </a>
+        </div>
+    </div>
+
+    @Html.Partial("_CreateEditBrand")
+}
+
+@section scripts{
+    
+   <script>
+       function BrandDelete() {
+
+           var _brandId = $("#Id").val();
+           console.log("_brandId" + _brandId);
+           if (_brandId > 0) {
+               var result = confirm("Silmek istediğinizden eminmisiniz");
+               if (result) {
+
+                   $.ajax({
+                       type: "Post",
+                       url: "/Management/Brand/Delete",
+                       data: { 'Id': _brandId },
+                       success: function (data) {
+
+                           window.location.assign("/Management/Brand/List");
+
+                       },
+                       beforeSend: function () {
+                           $("#wait").css("display", "block");
+                       },
+                       complate: function () {
+                           $("#wait").css("display", "none");
+                       },
+                       error: function () {
+                           alert("Silme işleminde bir hata gerçekleşti");
+                       }
+
+
+                   })
+
+               }
+           }
+
+       }
+    </script>
+
+
+    }

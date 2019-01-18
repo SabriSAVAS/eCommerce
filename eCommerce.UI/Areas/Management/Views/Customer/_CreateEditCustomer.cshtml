@@ -1,0 +1,120 @@
+﻿@model eCommerce.Dto.Customers.CustomerViewModel
+@{
+    ViewBag.Title = "_CreateEditCustomer";
+}
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-tab-name="tab-customer" data-toggle="tab" href="#tab-customer" aria-expanded="true">Customer</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-customer">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">eMail</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Password</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(x => x.Password, new { @class = "form-control single-line" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Customer Role</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.DropDownListFor(x => x.CustomerRoleId,Model.CustomerRoleList, new { @class = "form-control select2", @multiple="multiple",
+                                           @style="width:100%", @data_placeholder="Seçiniz" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Gander</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.RadioButtonFor(x=>x.Gender,true) Erkek
+                                            @Html.RadioButtonFor(x => x.Gender, false) Kadin
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">User Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">First Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                         @Html.TextBoxFor(x=>x.FirstName,new { @class="form-control"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Last Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Date of Birth</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(x => x.DateofBirth, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Company</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(x => x.CompanyName, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Admin Comment</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(x => x.AdminComment, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="pull-right">Is Active</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.CheckBoxFor(x => x.IsActive)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Fixed Layout</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link href="~/Areas/Management/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link href="~/Areas/Management/Content/AdminLTE.min.css" rel="stylesheet" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="~/Areas/Management/Content/_all-skins.min.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   
+     <link href="~/Areas/Management/Content/datepicker3.css" rel="stylesheet" />
+
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link href="~/Areas/Management/Content/mainStyle.css" rel="stylesheet" />
+    <link href="~/Areas/Management/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Areas/Management/Content/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="~/Areas/Management/Content/select2.min.css" rel="stylesheet" />
+    @*<link href="~/Content/lightbox.min.css" rel="stylesheet" />*@
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+
+        .validation-summary-errors {
+            color: red;
+        }
+        .single-line{
+            width:200px;
+        }
+    </style>
+    @RenderSection("head", false)
+</head>
+<!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
+<!-- the fixed layout is not compatible with sidebar-mini -->
+<body class="hold-transition skin-blue fixed sidebar-mini">
+    <!-- Site wrapper -->
+
+    <div class="wrapper">   
+        @Html.Partial("_MainHeader")
+        <!-- =============================================== -->
+        <!-- Left side column. contains the sidebar -->
+        @Html.Partial("_RightSideBar")
+        <!-- =============================================== -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            @Html.Partial("_AlertMessage")
+
+            @RenderBody()
+
+            <div id="wait" style="display:none;width:69px;height:89px;position:absolute;top:50%;left:50%;padding:2px;"><img src='~/Content/loading.gif' width="64" height="64" /><br>Yukleniyor...</div>
+
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_MainFooter")
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+             immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 2.2.0 -->
+    <script src="~/Areas/Management/Scripts/jQuery-2.2.0.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="~/Areas/Management/Scripts/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="~/Areas/Management/Scripts/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Areas/Management/Scripts/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Areas/Management/Scripts/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Areas/Management/Scripts/demo.js"></script>
+    <!-- AdminLTE for ckeditor purposes -->
+    <script src="~/Areas/Management/ckeditor/ckeditor.js"></script>
+    @*Ozel Sorgular*@
+  
+    @*<script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Areas/Management/Scripts/scripts.js"></script>
+    @*<script src="~/Areas/Management/Scripts/bootstrap-tagsinput-angular.js"></script>*@
+    <script src="~/Areas/Management/Scripts/bootstrap-tagsinput.js"></script>
+  
+     @*<script src="~/Areas/Management/Scripts/lightbox-plus-jquery.min.js"></script>*@
+     @*<script src="~/Scripts/lightbox.min.js"></script>*@
+  
+      @*datatimepicker*@
+    <script src="~/Areas/Management/Scripts/bootstrap-datepicker.js"></script>
+    @RenderSection("scripts", false)
+
+</body>
+</html>

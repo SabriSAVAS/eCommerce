@@ -1,0 +1,50 @@
+﻿@model  List<eCommerce.Dto.SpecificationProductMapping.ProductSpecificationMappingListViewModel>
+@using eCommerce.Dto.Enums
+<div>
+    <div class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <b>Product Specifications</b>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table  table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Attribute type</th>
+                                <th>Attribute</th>
+                                <th>Value</th>
+                                <th class="text-center">
+                                    Show on product page
+                                </th>
+                                <th class="text-center">
+                                    <em class="fa fa-cog"></em>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                        {
+
+                                <tr id="tr_@item.Id">
+                                    <td>@Enum.GetName(typeof(SpecificationAttributeType),item.AttributeTypeId)</td>
+                                    <td>@item.SpecificationAttribute</td>
+                                    <td>@item.SpecificationAttributeValue</td>
+                                    <td class="text-center">
+                                        @Html.Raw(Html.GetStatus(item.ShowOnProductPage))
+                                    </td>
+                                    <td class="text-center">
+
+                                        <a href="javascript:productSpecificationAttributeDelete(@item.Id)" class="btn btn-danger btn-sm"><em class="fa fa-trash"></em></a>
+                                    </td>
+
+                                </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

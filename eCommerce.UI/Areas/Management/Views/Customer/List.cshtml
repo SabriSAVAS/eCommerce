@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "List";
+}
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Manage Customer
+    </h1>
+    <div class="pull-right">
+        <a href="/Management/Customer/Create" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Add new
+        </a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                Export
+            </button>
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">&nbsp;</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a href="/Admin/Customer/ExportXml">
+                        <i class="fa fa-file-code-o"></i>
+                        Export to XML
+                    </a>
+                </li>
+                <li>
+                    <a href="/Management/Customer/ExportXlsx">
+                        <i class="fa fa-file-excel-o"></i>
+                        Export to Excel
+                    </a>
+                </li>
+            </ul>
+        </div>
+      
+    </div>
+</div>
+

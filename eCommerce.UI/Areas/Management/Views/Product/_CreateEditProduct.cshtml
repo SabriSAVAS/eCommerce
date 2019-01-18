@@ -1,0 +1,502 @@
+﻿@model eCommerce.Dto.Product.ProductViewModel
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-12 clearfix">
+                <div class="pull-left" style="padding-top:10px">
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(x => x.Id, new { id = "productId" })
+                    @Html.AntiForgeryToken()
+                </div>
+            </div>
+        </div>
+
+        <div id="produt" class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info" aria-expanded="true">Produt info</a></li>
+                <li class=""><a data-tab-name="tab-seo" data-toggle="tab" href="#tab-seo" aria-expanded="false">Seo</a></li>
+                <li class=""><a data-tab-name="tab-picture" data-toggle="tab" href="#tab-picture" aria-expanded="false">Picture</a></li>
+                <li class=""><a data-tab-name="tab-category" data-toggle="tab" href="#tab-category" aria-expanded="false">Category</a></li>
+                <li class=""><a data-tab-name="tab-releatedproduct" data-toggle="tab" href="#tab-releatedproduct" aria-expanded="false">Releated Product</a></li>
+                <li class=""><a data-tab-name="tab-attribute" data-toggle="tab" href="#tab-attribute" aria-expanded="false">Attribute</a></li>
+                <li class=""><a data-tab-name="tab-specification" data-toggle="tab" href="#tab-specification" aria-expanded="false">Specifcation</a></li>
+
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-info">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Name :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.Name)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Short Description :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div>
+                                                @Html.TextAreaFor(x => x.ShortDescription, new { @class = "form-control", rows = "3", cols = "80" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Long Description :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div>
+                                                @Html.TextAreaFor(x => x.LongDescription, new { @class = "ckeditor", rows = "5", cols = "80" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Sku :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.Sku, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.Sku)
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Brand :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                @Html.DropDownListFor(x => x.BrandId, Model.BrandList, "Selected", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.BrandId)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Vat :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                @Html.DropDownListFor(x => x.Vat, Model.VatList, "Selected", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.Vat)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Quantity :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.Qunatity, new { type = "number", @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.Qunatity)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Free Shipping :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div style="padding-top:7px">
+                                                @Html.CheckBoxFor(x => x.IsFreeShipping)
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Old Price :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">₺</span>
+                                                @Html.TextBoxFor(x => x.OldPrice, new { @class = "form-control" })
+
+                                                <span class="input-group-addon">.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">ShowOnHomePage :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div style="padding-top:7px">
+                                                @Html.CheckBoxFor(x => x.ShowOnHomePage)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Price :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">₺</span>
+                                                @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.Price)
+                                                <span class="input-group-addon">.00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Published :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div style="padding-top:7px">
+                                                @Html.CheckBoxFor(x => x.Published)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Product Cost :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">₺</span>
+                                                @Html.TextBoxFor(x => x.ProductCost, new { @class = "form-control" })
+
+                                                <span class="input-group-addon">.00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="pull-right">
+                                                <label class="control-label">Tags :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+
+                                                @Html.TextBoxFor(x => x.ProductTags, new { @data_role = "tagsinput", @class = "form-control" })
+                                                @*  <input type="text" class="form-control" name="name" data-role="tagsinput" value="" />*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab-seo">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Meta keywords :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.MetaKeywords, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Meta Description :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextAreaFor(x => x.MetaDescription, new { @class = "form-control", rows = "3" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Meta title	:</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.MetaTitle, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab-picture">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <div>
+
+                                    @if (Model.Id > 0)
+                                    {
+                                        <div id="productList">
+                                            @Html.Action("ProductPictureList", "Product", Model.Id)
+                                        </div>
+                                        @Html.Partial("_CreateEditPicture")
+
+
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("You need to save the product before you can upload pictures for this product page.")
+                                    }
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab-category">
+
+                    @if (Model.Id > 0)
+                    {
+                        @Html.Partial("_CreateCategory", Model)
+
+                        <div id="productCategoryList">
+                            @Html.Action("ProductCategoryList", "Product", Model.Id)
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Raw("You need to save the product before you can upload pictures for this product page.")
+                    }
+
+
+
+                </div>
+         
+                <div class="tab-pane" id="tab-releatedproduct">
+                    <div class="panel-group">
+
+                        <div class="panel-success">
+                            <div class="panel-heading">
+
+                                <a href="javascript:RelatedSelectPopup()" class="btn btn-success btn-sm">
+                                <i class="fa fa-fw fa-plus-square"></i>Add</a>
+
+                            </div>
+                            <div class="panel-body">
+                                <div id="productrelatedId">
+                                    @Html.Action("ProductRelatedList", "Product", new { Id = Model.Id })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function RelatedSelectPopup() {
+                            $("#productreleated").modal("show");
+                        }
+                    </script>
+                    <script>
+                        function RelatedProductAdd(Id) {
+                            var productId = $("#productId").val();
+
+
+                            $.ajax({
+                                type: "Post",
+                                url: "/Management/Product/RelatedProductAdd",
+                                dataType: "Json",
+                                data: { 'Id': Id, 'productId': productId },
+                                success: function (data) {
+
+                                    if (data == "1") {
+                                        $("#productreleated").modal("hide");
+                                        GetRelatedProductList();
+                                    }
+
+                                    $("#wait").css("display", "none");
+                                },
+                                beforeSend: function () {
+                                    $("#wait").css("display", "block");
+                                },
+                                complate: function () {
+                                    $("#wait").css("display", "none");
+                                },
+                                error: function () {
+                                    alert("Silme işleminde bir hata gerçekleşti");
+                                }
+
+
+                            })
+
+                        }
+
+
+                    </script>
+                    <script>
+                        function GetRelatedProductList() {
+                            var productId = $("#productId").val();
+                            $.ajax({
+                                type: "Post",
+                                url: "/Management/Product/ProductRelatedList/" + productId,
+                                dataType: "html",
+                                success: function (data) {
+                                    $("#productrelatedId").html(data);
+
+
+                                    $("#wait").css("display", "none");
+                                },
+                                beforeSend: function () {
+                                    $("#wait").css("display", "block");
+                                },
+                                complate: function () {
+                                    $("#wait").css("display", "none");
+                                },
+                                error: function () {
+
+                                }
+
+
+                            })
+                        }
+                     
+                    </script>
+                    <script>
+                        function RelatedProductDelete(Id) { 
+                            console.log("relatedId" + Id);
+                            if (Id > 0) {
+                                var result = confirm("Silmek istediğinizden eminmisiniz");
+                                if (result) {
+
+                                    $.ajax({
+                                        type: "Post",
+                                        url: "/Management/Product/RelatedProductDelete",
+                                        data: { 'Id': Id },
+                                        dataType:"Json",
+                                        success: function (data) {
+                                            if (data == "1") {
+                                                
+                                                $("#tr_" + Id).remove();
+                                            }
+                                            $("#wait").css("display", "none");
+
+                                        },
+                                        beforeSend: function () {
+                                            $("#wait").css("display", "block");
+                                        },
+                                        complate: function () {
+                                            $("#wait").css("display", "none");
+                                        },
+                                        error: function () {
+                                            alert("Silme işleminde bir hata gerçekleşti");
+                                        }
+
+
+                                    })
+
+                                }
+                            }
+
+                        }
+
+                    </script>
+                </div>
+
+                <div class="tab-pane" id="tab-attribute">
+
+                    @if (Model.Id > 0)
+                    {
+                        <div>
+                            <div id="productattributelist">
+                                @Html.Action("ProductAttributeList", "Product", new { Id = Model.Id })
+                            </div>
+
+                            @Html.Action("ProductAttribute", "Product")
+
+
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Raw("You need to save the product before you can upload pictures for this product page.")
+                    }
+
+
+
+
+
+                </div>
+                <div class="tab-pane" id="tab-specification">
+
+
+                    @if (Model.Id > 0)
+                    {
+                        <div id="productAttributeList">
+                            @Html.Action("ProductSpecificationAttributeList", "Product", new { Id = Model.Id })
+                        </div>
+                        @Html.Action("ProductSpecificationAttribute", "Product")
+
+
+                    }
+                    else
+                    {
+                        @Html.Raw("You need to save the product before you can upload pictures for this product page.")
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

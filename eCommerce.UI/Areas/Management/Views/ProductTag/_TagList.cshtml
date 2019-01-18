@@ -1,0 +1,53 @@
+﻿@model PagedList.IPagedList<eCommerce.Dto.ProductTag.ProductTagListViewModel>
+@using PagedList
+@using PagedList.Mvc
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+
+            <div class="panel panel-default">
+                <div class="panel-footer">
+                    <b>Product Tags</b>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th> Name </th>
+                                    <th class="text-center"> Tagged products </th>
+                                    <th class="text-center"> <em class="fa fa-cog"></em> </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                            {
+                                    <tr>
+                                        <td> @item.Name </td>
+                                        <td class="text-center"> @item.Taggedproducts </td>
+                                        <td class="text-center">
+                                            <a href="javascript:TagEditPopup(@item.Id)" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                            <a href="javascript:TagDeletePopup(@item.Id)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                                        </td>
+                                    </tr>
+                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+
+                    @Html.PagedListPager(Model, page => Url.Action("List", new RouteValueDictionary {
+    {"Page",page}
+
+}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "divtaglist" }))
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

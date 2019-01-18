@@ -1,0 +1,87 @@
+﻿@model eCommerce.Dto.Specification.SpecificationAttributeViewModel
+@Html.HiddenFor(x => x.Id)
+@Html.AntiForgeryToken()
+@Html.ValidationSummary()
+<div class="content">
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-12 clearfix">
+                <div class="pull-left" style="padding-top:10px">
+
+                </div>
+            </div>
+        </div>
+        <div id="specification" class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info" aria-expanded="true">Attribute info</a></li>
+
+                <li class=""><a data-tab-name="tab-products" data-toggle="tab" href="#tab-options" aria-expanded="false">Options</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-info">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Name :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.Name)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Display order :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.OrderNo, new { type = "number", value = "0", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab-options">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                @if (Model.Id > 0)
+                                {
+                                    <div id="div_valueAttributeList">
+                                        @Html.Action("_ValueAttributeList", "SpecificationAttribute", new { Id = Model.Id })
+                                    </div>
+                                    <button type="button" onclick="javascript:specificationPopup()" class="btn bg-blue">
+                                        <i class="fa fa-floppy-o"></i>  Add a new value
+                                    </button>
+                                    
+                                }
+                                else
+                                {
+                                    @Html.Raw("You need to save the specification attribute before you can add options for this specification attribute page.")
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

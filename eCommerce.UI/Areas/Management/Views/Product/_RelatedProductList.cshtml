@@ -1,0 +1,54 @@
+﻿@model eCommerce.Dto.ReletedProduct.RelatedProductSearchViewModel
+@using PagedList;
+@using PagedList.Mvc;
+
+
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Brand</th>
+
+                            <th>Published</th>
+                            <th>
+                                <em class="fa fa-cog">
+
+                                </em>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.RelatedProductList)
+                        {
+                            <tr>
+                                <th>@item.ProductName</th>
+                                <th>@item.BrandName</th>
+                                <th>@Html.Raw(Html.GetStatus(item.Published))</th>
+
+                                <th>
+                                    <a href="javascript:RelatedProductAdd(@item.ProductId)">Add</a>
+                                </th>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <ul class="pagination pagination-sm no-margin pull-right">
+                @Html.PagedListPager(Model.RelatedProductList, page => Url.Action("RelatedProductPopup", new RouteValueDictionary {
+
+    {"Page",page },
+    {"ProductName",Model.ProductName }
+
+}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "relatedList" }))
+            </ul>
+        </div>
+    </div>
+
+</div>

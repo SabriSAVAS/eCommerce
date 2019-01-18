@@ -1,0 +1,35 @@
+﻿@model PagedList.IPagedList<eCommerce.Dto.ProductAttribute.ProductAttributeListViewModel>
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Product Attribute
+    </h1>
+    <div class="pull-right">
+        <a href="/Management/ProductAttribute/Create" class="btn bg-blue">
+            Add New
+            <i class="fa fa-plus-square"></i>
+        </a>
+
+    </div>
+
+</div>
+
+<div class="content">
+    <div id="divProductAttributeList">
+        @Html.Partial("_ProductAttributeList",Model)
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function OnBegin() {
+            $("#wait").css("display", "block");
+        }
+        function OnComplete() {
+            $("#wait").css("display", "none");
+        }
+    </script>
+    }

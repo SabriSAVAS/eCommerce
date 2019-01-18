@@ -1,0 +1,71 @@
+﻿@model List<eCommerce.Dto.Specification.SpecificationAttributeListViewModel>
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="content-header clearfix">
+
+    <h1 class="pull-left">
+        Specification attributes
+    </h1>
+    <div class="pull-right">
+        <a href="/Management/SpecificationAttribute/Create" class="btn bg-blue">
+            Add New
+            <i class="fa fa-plus-square"></i>
+        </a>
+    </div>
+</div>
+
+<div class="content">
+
+    <div class="form-horizontal">
+
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-responsive table-condensed">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+
+                                <th class="text-center">
+                                    Display order
+                                </th>
+
+
+                                <th class="text-center">
+                                    <em class="fa fa-cog"></em>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td class="text-center">
+                                        @item.OrderNo
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/Management/SpecificationAttribute/Edit/@item.Id" class="btn btn-default"><em class="fa fa-pencil"></em> </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>

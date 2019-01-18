@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+@section head{
+   
+}
+
+
+@using (Html.BeginForm("Create", "Customer", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <div class="content-header">
+        <h1 class="pull-left">
+            Add a new Brand
+        </h1> &nbsp;
+        <a href="/Management/Customer/List"><i class="fa fa-undo">Back to Customer list</i></a>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save
+            </button>
+            <button type="submit" name="savecontiune" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save and Continue Edit
+            </button>
+        </div>
+    </div>
+
+    @Html.Partial("_CreateEditCustomer")
+}
+
+
+
+
+@section scripts
+{
+    <script src="~/Areas/Management/Scripts/select2.full.min.js"></script>
+    <script>
+
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+        });
+    </script>
+
+
+<script>
+        $(function () {
+            $('#DateofBirth').datepicker({
+                autoclose: true,
+                format: 'dd.mm.yyyy'
+            });
+        });
+</script>
+}
+

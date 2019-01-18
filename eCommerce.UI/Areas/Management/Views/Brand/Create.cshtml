@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+@using (Html.BeginForm("Create", "Brand", FormMethod.Post,new { @enctype = "multipart/form-data" }))
+{
+    <div class="content-header">
+        <h1 class="pull-left">
+            Add a new Brand
+        </h1> &nbsp;
+        <a href="/Management/Brand/List"><i class="fa fa-undo">Back to brand list</i></a>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save
+            </button>
+            <button type="submit" name="savecontiune" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save and Continue Edit
+            </button>
+        </div>
+    </div>
+
+    @Html.Partial("_CreateEditBrand")
+}

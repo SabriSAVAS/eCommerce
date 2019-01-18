@@ -1,0 +1,166 @@
+﻿@model List< eCommerce.Dto.ProductAttributeValue.ProductAttributeValueListViewModel>
+
+<div class="panel-group">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <b>Product Attribute</b>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th class="text-center">
+                                Qunatity
+                            </th>
+
+                            <th>
+                                Cost
+                            </th>
+
+                            <th class="text-center">
+                                Display order
+                            </th>
+                            <th class="text-center">
+                                <em class="fa fa-cog"></em>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                                <tr id="tr_@item.Id">
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td class="text-center col-sm-2">
+                                        <input type="number" class="form-control" id="quantity_@item.Id" value="@item.Quantity" />
+                                    </td>
+
+                                    <td class="text-center col-sm-2">
+                                        <input type="text" class="form-control" id="cost_@item.Id" value="@item.Cost" />
+                                    </td>
+
+                                    <td class="text-center col-sm-2">
+                                        <input type="number" id="order_@item.Id" class="form-control" value="@item.OrderNo" />
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="javascript:ProductAttributeValueEdit(@item.Id)" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                        <a href="javascript:ProductAttributeValueDelete(@item.Id)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                                    </td>
+                                </tr>
+
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function ProductAttributeValueDelete(Id) {
+
+        
+        console.log("Id" + Id);
+        if (Id > 0) {
+            var result = confirm("Silmek istediğinizden eminmisiniz");
+            if (result) {
+
+                $.ajax({
+                    type: "Post",
+                    url: "/Management/Product/ProductAttributeValueDelete",
+                    data: { 'Id': Id },
+                    success: function (data) {
+                     
+                        if (data=="1") {
+                            $("#tr_" + Id).remove();
+                        }
+                      
+                        $("#wait").css("display", "none");
+                    },
+                    beforeSend: function () {
+                        $("#wait").css("display", "block");
+                    },
+                    complate: function () {
+                        $("#wait").css("display", "none");
+                    },
+                    error: function () {
+                        alert("Silme işleminde bir hata gerçekleşti");
+                    }
+
+
+                })
+
+            }
+        }
+
+    }
+
+    function ProductAttributeValueEdit(Id) {
+    
+
+
+        var cost = $("#cost_" + Id).val();
+        console.log("Edit Id" + Id);
+        if (isNaN(cost)) {
+            alert("cost only number")
+            return;
+        }
+        if (Id > 0) {
+            
+            var orderNo = $("#order_" + Id).val();
+
+            var quantiy = $("#quantity_" + Id).val();
+
+            var cost = $("#cost_" + Id).val();
+
+            var formdata = {
+                Id: Id,
+                orderNo: orderNo,
+                quantiy: quantiy,
+                cost:cost
+            }
+  
+
+                $.ajax({
+                    type: "Post",
+                    url: "/Management/Product/ProductAttributeValueEdit",
+                    data: formdata,
+                    dataType:"Json",
+                    success: function (data) {
+
+                        if (data == "1") {
+                            $("#productattributeView").modal('hide');
+                        }
+
+                        $("#wait").css("display", "none");
+                    },
+                    beforeSend: function () {
+                        $("#wait").css("display", "block");
+                    },
+                    complate: function () {
+                        $("#wait").css("display", "none");
+                    },
+                    error: function () {
+                        alert("Silme işleminde bir hata gerçekleşti");
+                    }
+
+
+                })
+
+            }
+        
+
+    }
+</script>

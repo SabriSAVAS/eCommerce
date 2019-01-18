@@ -1,0 +1,52 @@
+﻿@model PagedList.IPagedList<eCommerce.Dto.ProductAttribute.ProductAttributeListViewModel>
+@using PagedList
+@using PagedList.Mvc
+<div class="form-horizontal">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table style="width:100%" class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th style="width:50%">Name</th>
+                                <th style="width:40%" class="text-center">Description</th>
+                                <th style="width:10%" class="text-center">
+                                    <em class="fa fa-cog"></em>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                        {
+                                <tr>
+                                    <td style="width:50%">@item.Name</td>
+                                    <td style="width:40%" class="text-center">@item.Description</td>
+                                    <td style="width:10%" class="text-center">
+                                        <a href="/Management/ProductAttribute/Edit/@item.Id" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                    </td>
+                                </tr>
+                        }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="panel-footer">
+          
+
+                @Html.PagedListPager(Model, page => Url.Action("List", new RouteValueDictionary {
+
+    {"Page",page }
+
+}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "divProductAttributeList", OnBegin = "OnBegin", OnComplete = "OnComplete" }))
+          
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,54 @@
+﻿@model List<eCommerce.Dto.SpecificationValue.SpecificationAttributeValueListViewModel>
+
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table style="width:100%" class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width:60%">
+                                Name
+                            </th>
+
+                            <th style="width:20%" class="text-center">
+                                Display order
+                            </th>
+
+
+                            <th style="width:20%" class="text-center">
+                                <em class="fa fa-cog"></em>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                    {
+
+                            <tr>
+                                <th style="width:60%">
+                                    @item.Name
+                                </th>
+
+                                <th style="width:20%" class="text-center">
+                                    @item.OrderNo
+                                </th>
+
+
+                                <th style="width:20%" class="text-center">
+                                    <a href="javascript:GetValueByAttributeId(@item.Id)" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                    <a href="javascript:ValueAttribureDelete(@item.Id)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                                </th>
+                            </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

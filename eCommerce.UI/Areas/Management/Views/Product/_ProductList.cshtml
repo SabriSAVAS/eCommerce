@@ -1,0 +1,77 @@
+﻿@model eCommerce.Dto.Product.ProductSearchViewModel
+@using PagedList;
+@using PagedList.Mvc;
+<div class="panel-body">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Picture</th>
+                    <th>Product Name</th>
+                    <th>Brand Name</th>
+                    <th>Quantiy</th>
+                    <th class="text-center">Puhlished</th>
+                    <th class="text-center">ShowOnHomePage</th>
+                    <th class="text-center">IsFreeShipping</th>
+                    <th>Vat</th>
+                    <th>Price</th>
+
+                    <th class="text-center"><em class="fa fa-cog"></em></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ProductList != null)
+        {
+            foreach (var item in Model.ProductList)
+            {
+                <tr>
+                    @*<td><img src="@item.Picture" class="img-responsive" style="width:100px;height:100px" /></td>*@
+                    <td>
+                        <a class="example-image-link" href="@item.Picture" data-lightbox="example-2"
+                           data-title="@item.ProductName">
+                            Resim
+                        </a>
+                    </td>
+                    <td>@item.ProductName</td>
+                    <td>@item.BrandName</td>
+                    <td>@item.Quantity</td>
+                    <td class="text-center">
+                        @Html.Raw(Html.GetStatus(item.Puhlished))
+                    </td>
+                    <td class="text-center">
+                        @Html.Raw(Html.GetStatus(item.ShowOnHomePage))
+                    </td>
+                    <td class="text-center">
+                        @Html.Raw(Html.GetStatus(item.IsFreeShipping))
+
+                    </td>
+                    <td>@string.Format("{0:C2}", item.Vat)</td>
+                    <td>@string.Format("{0:C2}", item.Price)</td>
+
+                    <td class="text-center">
+                        <a href="/Management/Product/Edit/@item.Id" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                        <a href="javascript:ProductDelete(@item.Id)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                    </td>
+                </tr>
+            }
+        }
+            </tbody>
+
+
+
+        </table>
+    </div>
+</div>
+<div class="panel-footer">
+  
+        @Html.PagedListPager(Model.ProductList, page => Url.Action("List", new RouteValueDictionary{
+
+       {"ProductName",Model.ProductName },
+       {"Page",page }
+
+   }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "ajax-productlist" }))
+    
+</div>
+
+
+

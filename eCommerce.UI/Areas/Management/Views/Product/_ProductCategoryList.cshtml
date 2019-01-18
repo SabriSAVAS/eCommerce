@@ -1,0 +1,46 @@
+﻿@model List<eCommerce.Dto.ProductCategoryMapping.ProductCategoryMappingListViewModel>
+<div class="panel-group">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Category List
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Category Name</th>
+                            <th class="text-center">Published</th>
+                            <th class="text-center">Display order</th>
+                            <th class="text-center">
+                                <em class="fa fa-cog"></em>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                                <tr id="tr_@item.Id">
+                                    <td>@item.Category.Name</td>
+
+                                    <td class="text-center">@Html.Raw(Html.GetStatus( item.Category.Published))</td>
+
+                                    <td class="text-center">@item.Category.OrderNo</td>
+
+                                    <td class="text-center">
+                                        <a href="javascript:ProductCategoryDelete(@item.Id)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                                    </td>
+                                </tr>
+
+                        }
+
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

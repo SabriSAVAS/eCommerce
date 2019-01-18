@@ -1,0 +1,111 @@
+﻿@model eCommerce.Dto.Brand.BrandViewModel
+@Html.ValidationSummary()
+@Html.AntiForgeryToken()
+@Html.HiddenFor(x => x.Id)
+@Html.HiddenFor(x=>x.CreatedById)
+@Html.HiddenFor(x => x.CreatedDate)
+<div class="content">
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-12 clearfix">
+                <div class="pull-left" style="padding-top:10px">
+
+                </div>
+            </div>
+        </div>
+        <div id="category-edit" class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info" aria-expanded="true">Brand info</a></li>           
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-info">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Name :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.Name)
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Description :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Picture :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                <div class="fileUpload btn btn-primary">
+                                                    <span>Upload</span>
+                                                    @Html.TextBoxFor(x => x.Picture, new { type = "file", accept = "image/gif, image/jpeg, image/png", @Id = "fileupload", @onchange = "fileUpload()", @class = "upload" })
+                                                    @Html.ValidationMessageFor(x => x.Picture)
+                                                    @Html.HiddenFor(x => x.PictureId)
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div class="img-responsive" style="width:200px;height:100px" id="dvPreview">
+
+                                                    @if (!string.IsNullOrEmpty(Model.PicturePath))
+                                                    {
+                                                        <img style="width:200px;height:100px" src="@Model.PicturePath" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img style="width:200px;height:100px" src="~/Areas/Management/Content/img/noPicture.png" />
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="pull-right">
+                                                <label class="control-label">Display order :</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                @Html.TextBoxFor(x => x.OrderNo, new { type = "number", value = "0", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            
+            </div>
+        </div>
+    </div>
+</div>

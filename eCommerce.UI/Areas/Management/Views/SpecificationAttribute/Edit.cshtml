@@ -1,0 +1,132 @@
+﻿@model eCommerce.Dto.Specification.SpecificationAttributeViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+@Html.HiddenFor(x=>x.Id)
+@using (Html.BeginForm("Edit", "SpecificationAttribute", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="content-header">
+
+        <h1 class="pull-left">Edit a new specification attribute -> @Model.Name</h1>
+        <a href="/Management/SpecificationAttribute/List"><i class="fa fa-undo">Back to specifaction list</i></a>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save
+            </button>
+            <button type="submit" name="savecontiune" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save and Continue Edit
+            </button>
+            <a onclick="javascript:CategoryDelete()" name="save" class="btn btn-danger">
+                <i class="fa fa-remove"></i> Delete
+            </a>
+        </div>
+    </div>
+    
+    @Html.Partial("_CreateEditSpecifaction")
+
+
+}
+
+
+@*Attributelerin value degerini girmek için oluştutulan Popup*@
+@Html.Action("_ValueCreatePopup", "SpecificationAttribute", new { Id = Model.Id })
+
+
+
+
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function specificationPopup() {
+            $("#form-specification_Value")[0].reset();
+            $("#valueId").val("0");
+            $('#specificationCreatevaluePopup').modal('show');
+           
+        }
+        function OnSuccess(result) {
+            console.log("OnSuccess "+ result);
+            if(result=="1")
+            {
+                GetValueAttribuetList();
+                $('#specificationCreatevaluePopup').modal('hide');
+                $("#form-specification_Value")[0].reset();
+             
+                
+            }
+        }
+
+        function GetValueByAttributeId(Id) {
+            console.log("GetValueByAttributeId " + Id);
+            if (Id>0) {
+                
+                $.ajax({
+                    type: "Get",
+                    url: "/Management/SpecificationAttribute/GetValueByAttributeId",
+                    data:{'Id':Id},
+                    dataType: "json",
+                    success: function (data) {
+                        $("#valueId").val(data.ValueId);
+                        $("#valueName").val(data.Name);
+                        $("#valueOrderNo").val(data.OrderNo);
+                        $("#valueSpecificationAttributeId").val(data.SpecificationAttributeId);
+                        $('#specificationCreatevaluePopup').modal('show');
+                    }
+
+
+                })
+               
+
+            }
+        }
+
+        function GetValueAttribuetList() {
+            var Id=$("#Id").val();
+            console.log(Id);
+            $.ajax({
+
+                type: "Get",
+                url: "/Management/SpecificationAttribute/_ValueAttributeList",
+                data: { 'Id': Id },
+                dataType:"html",
+                success: function (data) {
+                    $("#div_valueAttributeList").html(data);
+                }
+
+            })
+
+        }
+
+        function ValueAttribureDelete(Id) {
+            if (Id>0) {
+                var result = confirm("Silmek istediğinizden eminmisiniz?");
+                if (result) {
+
+                    $.ajax({
+
+                        type: "Post",
+                        url: "/Management/SpecificationAttribute/ValueAttribureDelete",
+                        data: { 'Id': Id },
+                        success: function (data) {
+                            if (data == "1") {
+                                $("#form-specification_Value")[0].reset();
+                                GetValueAttribuetList();
+                            }
+                           
+                        },
+                        error: function () {
+                            alert("Silme işleminde bir hata gerçekleşti");
+                        }
+
+
+                    })
+                }
+            }
+        }
+
+    
+    </script>
+}

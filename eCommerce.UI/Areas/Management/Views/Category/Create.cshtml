@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm("Create", "Category", FormMethod.Post,new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="content-header">
+        <h1 class="pull-left">
+            Add a new category
+        </h1> &nbsp;
+        <a href="/Management/Category/List"><i class="fa fa-undo">Back to category list</i></a>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save
+            </button>
+            <button type="submit" name="savecontiune" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>  Save and Continue Edit
+            </button>
+        </div>
+    </div>
+    @Html.Partial("_CreateEditCategory")
+
+}
